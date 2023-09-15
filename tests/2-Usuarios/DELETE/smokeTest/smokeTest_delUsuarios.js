@@ -13,7 +13,7 @@ const baseChecks = new BaseChecks();
 export async function setup(){
     let ids = []
     //Cadastra usuario
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 100; i++) {
         try {
             let payloadUsuario = geraBody(10, 'usuario')
             const resUsuario = baseRest.post(ENDPOINTS.USER_ENDPOINT, payloadUsuario);

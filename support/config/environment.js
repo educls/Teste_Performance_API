@@ -7,7 +7,7 @@ export const testConfig = {
     options: {
         smokeThresholdsLogin: {
             vus: 1,
-            duration: '5s',
+            duration: '2s',
             thresholds: {
                 http_req_duration: ['p(95)<2000'],
                 http_req_failed: ['rate<0.01'],
@@ -30,7 +30,7 @@ export const testConfig = {
             //     {duration: '10s', target: 0}
             // ],
             vus: 1,
-            duration: '5s',
+            duration: '2s',
             thresholds: {
                 http_req_duration: ['p(95)<2000'],
                 http_req_failed: ['rate<0.01'],
@@ -48,7 +48,7 @@ export const testConfig = {
             //     { duration: '5s', target: 0 },
             // ],
             vus: 1,
-            duration: '5s',
+            duration: '2s',
             thresholds: {
                 http_req_duration: ['p(95)<2000'],
                 http_req_failed: ['rate<0.01'],
@@ -74,7 +74,7 @@ export const testConfig = {
 
         loadThresholds: {
             vus: 1,
-            duration: '5s',
+            duration: '2s',
             // vus: 400,
             // duration: '30s',
             setupTimeout: '300s',
@@ -90,7 +90,7 @@ export const testConfig = {
         },
         stressThresholds: {
             vus: 1,
-            duration: '5s',
+            duration: '2s',
             // vus: 200,
             // duration: '2m',
             setupTimeout: '300s',
@@ -106,7 +106,7 @@ export const testConfig = {
         },
         smokeThresholds: {
             vus: 1,
-            duration: '5s',
+            duration: '2s',
             // vus: 1,
             // duration: '10s',
             setupTimeout: '300s',

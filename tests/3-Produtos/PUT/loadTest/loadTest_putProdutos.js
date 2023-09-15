@@ -3,8 +3,7 @@ import { geraBody } from '../../../../functions/GeraBody.js';
 import { BaseChecks, BaseRest, ENDPOINTS, testConfig } from '../../../../support/base/baseTest.js'
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
-
-export const options = testConfig.options.stressThresholds;
+export const options = testConfig.options.loadThresholds;
 
 const base_uri = testConfig.environment.hml.url;
 const baseRest = new BaseRest(base_uri);
@@ -25,42 +24,47 @@ export async function setup(){
         const resLoginJSON = JSON.parse(resLogin.body)
         let token = resLoginJSON.authorization
     sleep(1)
+    //Cadastra Produto
+        const payloadProduto = geraBody(10, 'produto')
+        const resPostProduto = baseRest.post(`${ENDPOINTS.PRODUCTS_ENDPOINT}`, payloadProduto, token)
+        const resPostProdutoJSON = JSON.parse(resPostProduto.body)
+        const Id_Produto = resPostProdutoJSON._id
     return{
         Id_Usuario,
+        Id_Produto,
         token,
-        payloadUsuario
+        payloadProduto
     }
 }
 
 export default(data) =>{
-    const payload = data.payloadUsuario
-    const idUsuario = data.Id_Usuario
+    const idProduto = data.Id_Produto
+    const payloadProd = data.payloadProduto
     const tokenBearer = data.token
-
-    const bodyPutUsuario = {
-        "nome": geraBody(10, "put"),
-        "email": payload.email,
-        "password": payload.password,
-        "administrador": payload.administrador
+    const bodyPutProduto = {
+        "nome": geraBody(10, 'put'),
+        "preco": payloadProd.preco,
+        "descricao": payloadProd.descricao,
+        "quantidade": payloadProd.quantidade
     }
-
-    const resPutUsuario = baseRest.put(`${ENDPOINTS.USER_ENDPOINT}/`, idUsuario, tokenBearer, bodyPutUsuario)
-
-    baseChecks.checkStatusCode(resPutUsuario, 200)
-    baseChecks.checkResponseSize(resPutUsuario, 50)
-    baseChecks.checkResponseMessage(resPutUsuario, 'Registro alterado com sucesso')
-    baseChecks.checkResponseTime(resPutUsuario, 2000)
+    
+    const resPutProduto = baseRest.put(`${ENDPOINTS.PRODUCTS_ENDPOINT}/`, idProduto, tokenBearer, bodyPutProduto)
+    baseChecks.checkStatusCode(resPutProduto, 200)
+    baseChecks.checkResponseSize(resPutProduto, 50)
+    baseChecks.checkResponseMessage(resPutProduto, 'Registro alterado com sucesso')
+    baseChecks.checkResponseTime(resPutProduto, 2000)
     sleep(1)
 }
 
 export function teardown(data){
     console.log("Realizando Limpeza dos Dados")
+    baseRest.delete(`${ENDPOINTS.PRODUCTS_ENDPOINT}/`, data.Id_Produto, data.token)
     baseRest.delete(`${ENDPOINTS.USER_ENDPOINT}/`, data.Id_Usuario)
     console.log("Limpeza do teste concluida")
 }
 
 export function handleSummary(data) {
     return {
-      "stress_test_putUsuarios.html": htmlReport(data),
+      "load_test_putProdutos.html": htmlReport(data),
     };
 }

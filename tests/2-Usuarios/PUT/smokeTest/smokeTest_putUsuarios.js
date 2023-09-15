@@ -1,7 +1,7 @@
 import { sleep } from 'k6'
 import { geraBody } from '../../../../functions/GeraBody.js';
 import { BaseChecks, BaseRest, ENDPOINTS, testConfig } from '../../../../support/base/baseTest.js'
-//import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
 
 export const options = testConfig.options.smokeThresholds;
@@ -57,4 +57,10 @@ export function teardown(data){
     console.log("Realizando Limpeza dos Dados")
     baseRest.delete(`${ENDPOINTS.USER_ENDPOINT}/`, data.Id_Usuario)
     console.log("Limpeza do teste concluida")
+}
+
+export function handleSummary(data) {
+    return {
+      "smoke_test_putUsuarios.html": htmlReport(data),
+    };
 }

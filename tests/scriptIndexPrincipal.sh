@@ -17,6 +17,7 @@ bash scriptIndexProdutos.sh "$parametro"
 cd ../4-Carrinhos/
 bash scriptIndexCarrinhos.sh
 
+
 cd ../5-Fluxo/
 bash scriptIndexFluxo.sh
 

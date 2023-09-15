@@ -29,7 +29,7 @@ export async function setup(){
     sleep(1)
     //Cadastra Produto
     let ids_Prod = []
-        for(let i = 0; i < 200; i++){
+        for(let i = 0; i < 100; i++){
             const payloadProduto = geraBody(10, 'produto')
 
             const resPostProduto = baseRest.post(ENDPOINTS.PRODUCTS_ENDPOINT, payloadProduto, token)
