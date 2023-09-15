@@ -1,0 +1,12 @@
+{
+    "users": [
+        {
+            "email": "fulano@qa.com",
+            "password": "teste"
+        },
+        {
+            "email": "fulano@qa.com",
+            "password": "teste"
+        }
+    ]
+}
